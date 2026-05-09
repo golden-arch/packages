@@ -1,0 +1,13 @@
+pkgname=golden-arch-defaults
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Golden Arch system defaults — sysctl hardening, AppArmor profiles, skel dotfiles"
+arch=('any')
+url="https://github.com/golden-arch/packages"
+license=('GPL-3.0-only')
+depends=('apparmor' 'audit')
+
+package() {
+    # Stub — populated in Phase 2
+    true
+}

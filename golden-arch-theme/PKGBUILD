@@ -1,0 +1,13 @@
+pkgname=golden-arch-theme
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Golden Arch Everforest theme — KDE, Hyprland, GTK, Qt, Papirus icons"
+arch=('any')
+url="https://github.com/golden-arch/packages"
+license=('GPL-3.0-only')
+depends=('papirus-icon-theme' 'bibata-cursor-theme' 'kvantum' 'ttf-jetbrains-mono-nerd' 'ttf-geist')
+
+package() {
+    # Stub — populated in Phase 2
+    true
+}

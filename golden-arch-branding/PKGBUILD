@@ -1,0 +1,13 @@
+pkgname=golden-arch-branding
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Golden Arch branding — wallpapers, Plymouth, GRUB, SDDM themes, Calamares slideshow"
+arch=('any')
+url="https://github.com/golden-arch/packages"
+license=('GPL-3.0-only')
+depends=('plymouth' 'grub' 'sddm')
+
+package() {
+    # Stub — populated in Phase 2
+    true
+}

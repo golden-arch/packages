@@ -1,0 +1,13 @@
+pkgname=golden-arch-hyprland-config
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Golden Arch Hyprland config — standalone, for users not on KDE"
+arch=('any')
+url="https://github.com/golden-arch/packages"
+license=('GPL-3.0-only')
+depends=('hyprland' 'waybar' 'rofi-wayland' 'swaync' 'hyprlock' 'hypridle' 'hyprpaper')
+
+package() {
+    # Stub — populated in Phase 2
+    true
+}
