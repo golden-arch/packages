@@ -1,13 +1,47 @@
 pkgname=golden-arch-defaults
-pkgver=0.1.0
+pkgver=1.0
 pkgrel=1
-pkgdesc="Golden Arch system defaults — sysctl hardening, AppArmor profiles, skel dotfiles"
+pkgdesc="Golden Arch Linux system defaults — sysctl hardening, skel, mirrorlist"
 arch=('any')
 url="https://github.com/golden-arch/packages"
 license=('GPL-3.0-only')
-depends=('apparmor' 'audit')
+depends=('golden-arch-keyring')
+optdepends=(
+    'apparmor: enforce included AppArmor profiles'
+    'reflector: auto-refresh mirrorlist'
+)
+backup=(
+    'etc/pacman.d/mirrorlist'
+    'etc/pacman.conf'
+)
+
+source=(
+    "golden-arch-sysctl.conf"
+    "golden-arch-pacman.conf"
+    "golden-arch-mirrorlist"
+    "skel-bashrc"
+    "skel-zshrc"
+    "skel-fishconfig"
+)
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
 
 package() {
-    # Stub — populated in Phase 2
-    true
+    # sysctl hardening
+    install -Dm644 golden-arch-sysctl.conf \
+        "${pkgdir}/etc/sysctl.d/90-golden-arch.conf"
+
+    # pacman.conf with golden-arch repo pre-configured
+    install -Dm644 golden-arch-pacman.conf \
+        "${pkgdir}/etc/pacman.conf"
+
+    # Default mirrorlist (Arch mirrors, sorted by speed)
+    install -Dm644 golden-arch-mirrorlist \
+        "${pkgdir}/etc/pacman.d/mirrorlist"
+
+    # /etc/skel shell configs
+    install -Dm644 skel-bashrc  "${pkgdir}/etc/skel/.bashrc"
+    install -Dm644 skel-zshrc   "${pkgdir}/etc/skel/.zshrc"
+    install -Dm755 -d            "${pkgdir}/etc/skel/.config/fish"
+    install -Dm644 skel-fishconfig \
+        "${pkgdir}/etc/skel/.config/fish/config.fish"
 }

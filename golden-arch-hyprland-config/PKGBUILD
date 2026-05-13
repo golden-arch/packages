@@ -1,13 +1,44 @@
 pkgname=golden-arch-hyprland-config
-pkgver=0.1.0
+pkgver=1.0
 pkgrel=1
-pkgdesc="Golden Arch Hyprland config — standalone, for users not on KDE"
+pkgdesc="Golden Arch Linux Hyprland session — config, Waybar, Wofi"
 arch=('any')
 url="https://github.com/golden-arch/packages"
 license=('GPL-3.0-only')
-depends=('hyprland' 'waybar' 'rofi-wayland' 'swaync' 'hyprlock' 'hypridle' 'hyprpaper')
+depends=(
+    'hyprland'
+    'waybar'
+    'wofi'
+    'hyprpaper'
+    'hyprlock'
+    'hypridle'
+    'dunst'
+    'kitty'
+    'golden-arch-theme'
+)
+
+source=(
+    "hyprland.conf"
+    "waybar-config.json"
+    "waybar-style.css"
+    "wofi-style.css"
+    "hyprpaper.conf"
+    "hyprlock.conf"
+    "hypridle.conf"
+    "dunstrc"
+)
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
 
 package() {
-    # Stub — populated in Phase 2
-    true
+    # Drop all configs into /etc/skel so new users get them automatically
+    local skel="${pkgdir}/etc/skel/.config"
+
+    install -Dm644 hyprland.conf   "${skel}/hypr/hyprland.conf"
+    install -Dm644 hyprpaper.conf  "${skel}/hypr/hyprpaper.conf"
+    install -Dm644 hyprlock.conf   "${skel}/hypr/hyprlock.conf"
+    install -Dm644 hypridle.conf   "${skel}/hypr/hypridle.conf"
+    install -Dm644 waybar-config.json "${skel}/waybar/config.jsonc"
+    install -Dm644 waybar-style.css   "${skel}/waybar/style.css"
+    install -Dm644 wofi-style.css     "${skel}/wofi/style.css"
+    install -Dm644 dunstrc            "${skel}/dunst/dunstrc"
 }

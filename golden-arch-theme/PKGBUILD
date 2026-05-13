@@ -1,13 +1,65 @@
 pkgname=golden-arch-theme
-pkgver=0.1.0
+pkgver=1.0
 pkgrel=1
-pkgdesc="Golden Arch Everforest theme — KDE, Hyprland, GTK, Qt, Papirus icons"
+pkgdesc="Golden Arch Linux KDE theme — Everforest Dark"
 arch=('any')
 url="https://github.com/golden-arch/packages"
 license=('GPL-3.0-only')
-depends=('papirus-icon-theme' 'bibata-cursor-theme' 'kvantum' 'ttf-jetbrains-mono-nerd' 'ttf-geist')
+depends=(
+    'kvantum'
+    'papirus-icon-theme'
+    'papirus-folders'
+    'bibata-cursor-theme'
+    'everforest-gtk-theme-git'
+    'ttf-jetbrains-mono-nerd'
+)
+optdepends=('kde-gtk-config: apply GTK theme in KDE settings')
+
+source=(
+    "EverforestDark.colors"
+    "EverforestDark.colorscheme"
+    "MateriaEverforestDark.kvconfig"
+    "MateriaEverforestDark.svg"
+    "kdeglobals"
+    "kwinrc"
+    "gtk-settings.ini"
+)
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
 
 package() {
-    # Stub — populated in Phase 2
-    true
+    # KDE color scheme
+    install -Dm644 EverforestDark.colors \
+        "${pkgdir}/usr/share/color-schemes/EverforestDark.colors"
+
+    # Konsole color scheme
+    install -Dm644 EverforestDark.colorscheme \
+        "${pkgdir}/usr/share/konsole/EverforestDark.colorscheme"
+
+    # Kvantum theme
+    install -Dm644 MateriaEverforestDark.kvconfig \
+        "${pkgdir}/usr/share/Kvantum/MateriaEverforestDark/MateriaEverforestDark.kvconfig"
+    install -Dm644 MateriaEverforestDark.svg \
+        "${pkgdir}/usr/share/Kvantum/MateriaEverforestDark/MateriaEverforestDark.svg"
+
+    # /etc/skel KDE config (applied to new users)
+    install -Dm644 kdeglobals \
+        "${pkgdir}/etc/skel/.config/kdeglobals"
+    install -Dm644 kwinrc \
+        "${pkgdir}/etc/skel/.config/kwinrc"
+
+    # Kvantum theme selection for new users
+    install -dm755 "${pkgdir}/etc/skel/.config/Kvantum"
+    printf '[General]\ntheme=MateriaEverforestDark\n' \
+        > "${pkgdir}/etc/skel/.config/Kvantum/kvantum.kvconfig"
+
+    # GTK3 settings for new users
+    install -Dm644 gtk-settings.ini \
+        "${pkgdir}/etc/skel/.config/gtk-3.0/settings.ini"
+}
+
+post_install() {
+    # Recolor Papirus folders to green
+    papirus-folders -C green --theme Papirus-Dark &>/dev/null || true
+    papirus-folders -C green --theme Papirus &>/dev/null || true
+    papirus-folders -C green --theme Papirus-Light &>/dev/null || true
 }

@@ -1,5 +1,5 @@
 pkgname=golden-arch-keyring
-pkgver=20260510
+pkgver=1.0
 pkgrel=1
 pkgdesc="Golden Arch Linux PGP keyring"
 arch=('any')
@@ -7,7 +7,17 @@ url="https://github.com/golden-arch/packages"
 license=('GPL-3.0-only')
 provides=('golden-arch-keyring')
 
+source=("golden-arch-releases.gpg")
+sha256sums=('SKIP')
+
 package() {
-    install -Dm644 golden-arch.gpg "$pkgdir/usr/share/pacman/keyrings/golden-arch.gpg"
-    install -Dm644 golden-arch-trusted "$pkgdir/usr/share/pacman/keyrings/golden-arch-trusted"
+    install -Dm644 "${srcdir}/golden-arch-releases.gpg" \
+        "${pkgdir}/usr/share/pacman/keyrings/golden-arch.gpg"
+
+    install -dm755 "${pkgdir}/usr/share/pacman/keyrings"
+
+    printf '54BFAAD577E9C411F3FD80455FB5BF0F55007959:4:\n' \
+        > "${pkgdir}/usr/share/pacman/keyrings/golden-arch-trusted"
+
+    touch "${pkgdir}/usr/share/pacman/keyrings/golden-arch-revoked"
 }

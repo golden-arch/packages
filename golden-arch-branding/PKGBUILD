@@ -1,13 +1,44 @@
 pkgname=golden-arch-branding
-pkgver=0.1.0
+pkgver=1.0
 pkgrel=1
-pkgdesc="Golden Arch branding — wallpapers, Plymouth, GRUB, SDDM themes, Calamares slideshow"
+pkgdesc="Golden Arch Linux branding — wallpapers, GRUB theme, Plymouth theme, SDDM theme"
 arch=('any')
 url="https://github.com/golden-arch/packages"
 license=('GPL-3.0-only')
-depends=('plymouth' 'grub' 'sddm')
+depends=(
+    'grub'
+    'plymouth'
+    'sddm'
+    'sddm-sugar-candy-git'
+)
+install=golden-arch-branding.install
+
+source=(
+    "background.png"
+    "forest-1.jpg"
+    "grub-theme.tar.gz"
+    "plymouth-theme.tar.gz"
+    "sddm-theme.conf"
+)
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
 
 package() {
-    # Stub — populated in Phase 2
-    true
+    # Wallpapers
+    install -Dm644 forest-1.jpg \
+        "${pkgdir}/usr/share/backgrounds/golden-arch/forest-1.jpg"
+    install -Dm644 background.png \
+        "${pkgdir}/usr/share/backgrounds/golden-arch/background.png"
+
+    # GRUB theme
+    install -dm755 "${pkgdir}/boot/grub/themes/golden-arch"
+    tar -xzf grub-theme.tar.gz -C "${pkgdir}/boot/grub/themes/golden-arch"
+
+    # Plymouth theme
+    install -dm755 "${pkgdir}/usr/share/plymouth/themes/golden-arch"
+    tar -xzf plymouth-theme.tar.gz \
+        -C "${pkgdir}/usr/share/plymouth/themes/golden-arch"
+
+    # SDDM config
+    install -Dm644 sddm-theme.conf \
+        "${pkgdir}/etc/sddm.conf.d/golden-arch.conf"
 }
