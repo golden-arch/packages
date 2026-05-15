@@ -1,6 +1,6 @@
 pkgname=golden-arch-theme
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Golden Arch Linux KDE theme — Everforest Dark"
 arch=('any')
 url="https://github.com/golden-arch/packages"
@@ -12,7 +12,10 @@ depends=(
     'everforest-gtk-theme-git'
     'ttf-jetbrains-mono-nerd'
 )
-optdepends=('kde-gtk-config: apply GTK theme in KDE settings')
+optdepends=(
+    'kde-gtk-config: apply GTK theme in KDE settings'
+    'plymouth: animated boot splash'
+)
 
 source=(
     "EverforestDark.colors"
@@ -23,8 +26,23 @@ source=(
     "kdeglobals"
     "kwinrc"
     "gtk-settings.ini"
+    "wallpapers/goldenarch-centered-1080p.png"
+    "wallpapers/goldenarch-centered-1440p.png"
+    "wallpapers/goldenarch-offset-1080p.png"
+    "wallpapers/goldenarch-offset-1440p.png"
+    "icons/goldenarch-16.png"
+    "icons/goldenarch-32.png"
+    "icons/goldenarch-48.png"
+    "icons/goldenarch-64.png"
+    "icons/goldenarch-128.png"
+    "icons/goldenarch-256.png"
+    "icons/goldenarch-512.png"
+    "plymouth/background.png"
 )
-sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP'
+            'SKIP' 'SKIP' 'SKIP' 'SKIP'
+            'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP'
+            'SKIP')
 
 package() {
     # KDE color scheme
@@ -57,6 +75,43 @@ package() {
     # GTK3 settings for new users
     install -Dm644 gtk-settings.ini \
         "${pkgdir}/etc/skel/.config/gtk-3.0/settings.ini"
+
+    # Wallpapers
+    install -dm755 "${pkgdir}/usr/share/backgrounds/golden-arch"
+    install -Dm644 wallpapers/goldenarch-centered-1080p.png \
+        "${pkgdir}/usr/share/backgrounds/golden-arch/goldenarch-centered-1080p.png"
+    install -Dm644 wallpapers/goldenarch-centered-1440p.png \
+        "${pkgdir}/usr/share/backgrounds/golden-arch/goldenarch-centered-1440p.png"
+    install -Dm644 wallpapers/goldenarch-offset-1080p.png \
+        "${pkgdir}/usr/share/backgrounds/golden-arch/goldenarch-offset-1080p.png"
+    install -Dm644 wallpapers/goldenarch-offset-1440p.png \
+        "${pkgdir}/usr/share/backgrounds/golden-arch/goldenarch-offset-1440p.png"
+
+    # Hicolor app icons
+    for s in 16 32 48 64 128 256 512; do
+        install -Dm644 "icons/goldenarch-${s}.png" \
+            "${pkgdir}/usr/share/icons/hicolor/${s}x${s}/apps/golden-arch.png"
+    done
+
+    # Plymouth boot splash theme
+    install -dm755 "${pkgdir}/usr/share/plymouth/themes/golden-arch"
+    install -Dm644 plymouth/background.png \
+        "${pkgdir}/usr/share/plymouth/themes/golden-arch/background.png"
+    cat > "${pkgdir}/usr/share/plymouth/themes/golden-arch/golden-arch.plymouth" << 'EOF'
+[Plymouth Theme]
+Name=Golden Arch
+Description=Golden Arch boot splash
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/golden-arch
+ScriptFile=/usr/share/plymouth/themes/golden-arch/golden-arch.script
+EOF
+    cat > "${pkgdir}/usr/share/plymouth/themes/golden-arch/golden-arch.script" << 'EOF'
+bg = Image("background.png");
+bg_sprite = Sprite(bg.Scale(Window.GetWidth(), Window.GetHeight()));
+bg_sprite.SetZ(-100);
+EOF
 }
 
 post_install() {
@@ -64,4 +119,7 @@ post_install() {
     papirus-folders -C green --theme Papirus-Dark &>/dev/null || true
     papirus-folders -C green --theme Papirus &>/dev/null || true
     papirus-folders -C green --theme Papirus-Light &>/dev/null || true
+
+    # Register Plymouth theme
+    plymouth-set-default-theme golden-arch &>/dev/null || true
 }

@@ -22,8 +22,9 @@ source=(
     "skel-bashrc"
     "skel-zshrc"
     "skel-fishconfig"
+    "motd"
 )
-sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
 
 package() {
     # sysctl hardening
@@ -44,4 +45,7 @@ package() {
     install -Dm755 -d            "${pkgdir}/etc/skel/.config/fish"
     install -Dm644 skel-fishconfig \
         "${pkgdir}/etc/skel/.config/fish/config.fish"
+
+    # MOTD
+    install -Dm644 motd "${pkgdir}/etc/motd"
 }
