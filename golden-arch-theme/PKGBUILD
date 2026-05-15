@@ -12,10 +12,7 @@ depends=(
     'everforest-gtk-theme-git'
     'ttf-jetbrains-mono-nerd'
 )
-optdepends=(
-    'kde-gtk-config: apply GTK theme in KDE settings'
-    'plymouth: animated boot splash'
-)
+optdepends=('kde-gtk-config: apply GTK theme in KDE settings')
 
 source=(
     "EverforestDark.colors"
@@ -37,12 +34,10 @@ source=(
     "icons/goldenarch-128.png"
     "icons/goldenarch-256.png"
     "icons/goldenarch-512.png"
-    "plymouth/background.png"
 )
 sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP'
             'SKIP' 'SKIP' 'SKIP' 'SKIP'
-            'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP'
-            'SKIP')
+            'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
 
 package() {
     # KDE color scheme
@@ -93,25 +88,6 @@ package() {
             "${pkgdir}/usr/share/icons/hicolor/${s}x${s}/apps/golden-arch.png"
     done
 
-    # Plymouth boot splash theme
-    install -dm755 "${pkgdir}/usr/share/plymouth/themes/golden-arch"
-    install -Dm644 plymouth/background.png \
-        "${pkgdir}/usr/share/plymouth/themes/golden-arch/background.png"
-    cat > "${pkgdir}/usr/share/plymouth/themes/golden-arch/golden-arch.plymouth" << 'EOF'
-[Plymouth Theme]
-Name=Golden Arch
-Description=Golden Arch boot splash
-ModuleName=script
-
-[script]
-ImageDir=/usr/share/plymouth/themes/golden-arch
-ScriptFile=/usr/share/plymouth/themes/golden-arch/golden-arch.script
-EOF
-    cat > "${pkgdir}/usr/share/plymouth/themes/golden-arch/golden-arch.script" << 'EOF'
-bg = Image("background.png");
-bg_sprite = Sprite(bg.Scale(Window.GetWidth(), Window.GetHeight()));
-bg_sprite.SetZ(-100);
-EOF
 }
 
 post_install() {
@@ -119,7 +95,4 @@ post_install() {
     papirus-folders -C green --theme Papirus-Dark &>/dev/null || true
     papirus-folders -C green --theme Papirus &>/dev/null || true
     papirus-folders -C green --theme Papirus-Light &>/dev/null || true
-
-    # Register Plymouth theme
-    plymouth-set-default-theme golden-arch &>/dev/null || true
 }
