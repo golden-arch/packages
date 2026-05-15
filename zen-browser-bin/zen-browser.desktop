@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Zen Browser
+Comment=Privacy-focused Firefox-based browser
+Exec=/opt/zen-browser/zen %u
+Terminal=false
+Type=Application
+Icon=zen-browser
+Categories=Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;x-scheme-handler/http;x-scheme-handler/https;
+StartupNotify=true
+StartupWMClass=zen

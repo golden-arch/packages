@@ -1,0 +1,23 @@
+# Maintainer: Golden Arch <releases@golden-arch.org>
+pkgname=vesktop-bin
+pkgver=1.5.4
+pkgrel=1
+pkgdesc="Standalone Electron Discord app with Vencord built-in and better Wayland/screenshare support"
+arch=('x86_64')
+url="https://github.com/Vencord/Vesktop"
+license=('GPL3')
+depends=('gtk3' 'nss' 'alsa-lib' 'libnotify' 'xdg-utils')
+provides=('vesktop')
+conflicts=('vesktop')
+options=('!strip')
+source=("vesktop-${pkgver}.deb::https://github.com/Vencord/Vesktop/releases/download/v${pkgver}/vesktop_${pkgver}_amd64.deb")
+sha256sums=('SKIP')
+
+package() {
+  cd "${srcdir}"
+  bsdtar -xf "vesktop-${pkgver}.deb"
+  bsdtar -xf data.tar.*
+
+  cp -r usr "${pkgdir}/"
+  cp -r opt "${pkgdir}/" 2>/dev/null || true
+}
