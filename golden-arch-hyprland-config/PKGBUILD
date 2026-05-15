@@ -1,18 +1,18 @@
 pkgname=golden-arch-hyprland-config
 pkgver=1.0
 pkgrel=1
-pkgdesc="Golden Arch Linux Hyprland session — config, Waybar, Wofi"
+pkgdesc="Golden Arch Linux Hyprland session — config, Waybar, Rofi, SwayNC"
 arch=('any')
 url="https://github.com/golden-arch/packages"
 license=('GPL-3.0-only')
 depends=(
     'hyprland'
     'waybar'
-    'wofi'
+    'rofi'
+    'swaync'
     'hyprpaper'
     'hyprlock'
     'hypridle'
-    'dunst'
     'kitty'
     'golden-arch-theme'
 )
@@ -21,24 +21,27 @@ source=(
     "hyprland.conf"
     "waybar-config.json"
     "waybar-style.css"
-    "wofi-style.css"
+    "rofi-config.rasi"
+    "rofi-everforest.rasi"
+    "swaync-config.json"
+    "swaync-style.css"
     "hyprpaper.conf"
     "hyprlock.conf"
     "hypridle.conf"
-    "dunstrc"
 )
-sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
 
 package() {
-    # Drop all configs into /etc/skel so new users get them automatically
     local skel="${pkgdir}/etc/skel/.config"
 
-    install -Dm644 hyprland.conf   "${skel}/hypr/hyprland.conf"
-    install -Dm644 hyprpaper.conf  "${skel}/hypr/hyprpaper.conf"
-    install -Dm644 hyprlock.conf   "${skel}/hypr/hyprlock.conf"
-    install -Dm644 hypridle.conf   "${skel}/hypr/hypridle.conf"
+    install -Dm644 hyprland.conf      "${skel}/hypr/hyprland.conf"
+    install -Dm644 hyprpaper.conf     "${skel}/hypr/hyprpaper.conf"
+    install -Dm644 hyprlock.conf      "${skel}/hypr/hyprlock.conf"
+    install -Dm644 hypridle.conf      "${skel}/hypr/hypridle.conf"
     install -Dm644 waybar-config.json "${skel}/waybar/config.jsonc"
     install -Dm644 waybar-style.css   "${skel}/waybar/style.css"
-    install -Dm644 wofi-style.css     "${skel}/wofi/style.css"
-    install -Dm644 dunstrc            "${skel}/dunst/dunstrc"
+    install -Dm644 rofi-config.rasi   "${skel}/rofi/config.rasi"
+    install -Dm644 rofi-everforest.rasi "${skel}/rofi/everforest.rasi"
+    install -Dm644 swaync-config.json "${skel}/swaync/config.json"
+    install -Dm644 swaync-style.css   "${skel}/swaync/style.css"
 }

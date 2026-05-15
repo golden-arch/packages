@@ -1,0 +1,103 @@
+/* Golden Arch — Rofi Everforest theme */
+
+* {
+    bg:           #2D353B;
+    bg-alt:       #3D484D;
+    bg-input:     #232A2E;
+    fg:           #D3C6AA;
+    fg-alt:       #859289;
+    accent:       #A7C080;
+    yellow:       #DBBC7F;
+    red:          #E67E80;
+    border:       #A7C080;
+
+    background-color: transparent;
+    text-color: @fg;
+}
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    fullscreen: false;
+    width: 640px;
+    border-radius: 16px;
+    border: 1px solid;
+    border-color: @border;
+    background-color: @bg;
+    padding: 0;
+}
+
+mainbox {
+    spacing: 0;
+    padding: 0;
+    children: ["inputbar", "message", "listview"];
+    background-color: transparent;
+}
+
+inputbar {
+    padding: 14px 18px;
+    background-color: @bg-alt;
+    border: 0 0 1px 0 solid;
+    border-color: rgba(167, 192, 128, 0.25);
+    children: ["prompt", "entry"];
+    spacing: 12px;
+}
+
+prompt {
+    text-color: @accent;
+    font: "JetBrainsMono Nerd Font Bold 13";
+}
+
+entry {
+    placeholder: "Search…";
+    placeholder-color: @fg-alt;
+    text-color: @fg;
+    cursor: text;
+}
+
+message {
+    padding: 8px 14px;
+    background-color: @bg-alt;
+    border: 0 0 1px 0 solid;
+    border-color: rgba(167, 192, 128, 0.25);
+}
+
+textbox {
+    text-color: @fg;
+}
+
+listview {
+    padding: 8px;
+    spacing: 2px;
+    lines: 8;
+    columns: 1;
+    fixed-height: true;
+    dynamic: true;
+    cycle: true;
+    scrollbar: false;
+}
+
+element {
+    padding: 8px 12px;
+    spacing: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+element selected {
+    background-color: @accent;
+    text-color: @bg;
+}
+
+element-icon {
+    size: 22px;
+    background-color: transparent;
+    cursor: inherit;
+}
+
+element-text {
+    text-color: inherit;
+    vertical-align: 0.5;
+    cursor: inherit;
+}

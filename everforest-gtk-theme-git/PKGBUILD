@@ -1,0 +1,23 @@
+pkgname=everforest-gtk-theme-git
+pkgver=r89.abc1234
+pkgrel=1
+pkgdesc="Everforest GTK theme"
+arch=('any')
+url="https://github.com/Fausto-Korpsvart/Everforest-GTK-Theme"
+license=('GPL-3.0-only')
+makedepends=('git')
+provides=('everforest-gtk-theme')
+source=("git+https://github.com/Fausto-Korpsvart/Everforest-GTK-Theme.git")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd Everforest-GTK-Theme
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+package() {
+    cd Everforest-GTK-Theme
+    install -dm755 "${pkgdir}/usr/share/themes"
+    cp -r themes/Everforest-Dark "${pkgdir}/usr/share/themes/" 2>/dev/null || \
+    find . -maxdepth 2 -name "Everforest-Dark" -exec cp -r {} "${pkgdir}/usr/share/themes/" \;
+}

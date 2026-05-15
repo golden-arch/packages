@@ -1,0 +1,18 @@
+[[ $- != *i* ]] && return
+
+# Golden Arch aliases — modern CLI replacements
+alias ls='eza --icons'
+alias ll='eza -la --icons --git'
+alias lt='eza --tree --icons'
+alias cat='bat --style=auto'
+alias grep='rg'
+alias find='fd'
+alias top='btop'
+alias ff='fastfetch'
+
+# fzf
+source /usr/share/fzf/key-bindings.bash 2>/dev/null
+source /usr/share/fzf/completion.bash 2>/dev/null
+
+# Starship prompt
+eval "$(starship init bash)"

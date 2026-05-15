@@ -1,0 +1,24 @@
+pkgname=vscodium-bin
+pkgver=1.99.3.25096
+pkgrel=1
+pkgdesc="Binary releases of VS Code without MS branding/telemetry/licensing"
+arch=('x86_64')
+url="https://github.com/VSCodium/vscodium"
+license=('MIT')
+depends=('libsecret' 'libx11' 'libxcb' 'nss' 'gtk3' 'alsa-lib')
+provides=('vscodium' 'code')
+conflicts=('vscodium')
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/VSCodium/vscodium/releases/download/${pkgver}/VSCodium-linux-x64-${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+package() {
+    install -dm755 "${pkgdir}/opt/vscodium"
+    cp -r . "${pkgdir}/opt/vscodium/"
+
+    install -dm755 "${pkgdir}/usr/bin"
+    ln -s /opt/vscodium/bin/codium "${pkgdir}/usr/bin/codium"
+    ln -s /opt/vscodium/bin/codium "${pkgdir}/usr/bin/vscodium"
+
+    install -Dm644 resources/app/resources/linux/code.png \
+        "${pkgdir}/usr/share/pixmaps/vscodium.png"
+}

@@ -1,0 +1,25 @@
+pkgname=paru
+pkgver=2.0.4
+pkgrel=1
+pkgdesc="Feature packed AUR helper"
+arch=('x86_64')
+url="https://github.com/Morganamilo/paru"
+license=('GPL-3.0-only')
+depends=('git' 'pacman>=6.0')
+makedepends=('cargo' 'git')
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/Morganamilo/paru/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    cd "${pkgname}-${pkgver}"
+    cargo build --release --locked
+}
+
+package() {
+    cd "${pkgname}-${pkgver}"
+    install -Dm755 target/release/paru "${pkgdir}/usr/bin/paru"
+    install -Dm644 paru.conf "${pkgdir}/etc/paru.conf"
+    install -Dm644 completions/bash "${pkgdir}/usr/share/bash-completion/completions/paru"
+    install -Dm644 completions/zsh "${pkgdir}/usr/share/zsh/site-functions/_paru"
+    install -Dm644 completions/fish "${pkgdir}/usr/share/fish/vendor_completions.d/paru.fish"
+}

@@ -9,7 +9,7 @@ depends=(
     'kvantum'
     'papirus-icon-theme'
     'papirus-folders'
-    'bibata-cursor-theme'
+    'bibata-cursor-theme-bin'
     'everforest-gtk-theme-git'
     'ttf-jetbrains-mono-nerd'
 )
@@ -18,22 +18,25 @@ optdepends=('kde-gtk-config: apply GTK theme in KDE settings')
 source=(
     "EverforestDark.colors"
     "EverforestDark.colorscheme"
+    "Everforest.profile"
     "MateriaEverforestDark.kvconfig"
     "MateriaEverforestDark.svg"
     "kdeglobals"
     "kwinrc"
     "gtk-settings.ini"
 )
-sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
 
 package() {
     # KDE color scheme
     install -Dm644 EverforestDark.colors \
         "${pkgdir}/usr/share/color-schemes/EverforestDark.colors"
 
-    # Konsole color scheme
+    # Konsole color scheme + profile
     install -Dm644 EverforestDark.colorscheme \
         "${pkgdir}/usr/share/konsole/EverforestDark.colorscheme"
+    install -Dm644 Everforest.profile \
+        "${pkgdir}/usr/share/konsole/Everforest.profile"
 
     # Kvantum theme
     install -Dm644 MateriaEverforestDark.kvconfig \

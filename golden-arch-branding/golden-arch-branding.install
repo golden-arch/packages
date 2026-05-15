@@ -1,0 +1,11 @@
+post_install() {
+    # Set default Plymouth theme
+    plymouth-set-default-theme -R golden-arch 2>/dev/null || true
+
+    # Regenerate GRUB config to pick up new theme
+    grub-mkconfig -o /boot/grub/grub.cfg 2>/dev/null || true
+}
+
+post_upgrade() {
+    post_install
+}

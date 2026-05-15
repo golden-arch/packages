@@ -1,0 +1,29 @@
+pkgname=sddm-sugar-candy-git
+pkgver=r127.abc1234
+pkgrel=1
+pkgdesc="Sugar Candy SDDM theme"
+arch=('any')
+url="https://framagit.org/MarianArlt/sddm-sugar-candy"
+license=('GPL-3.0-only')
+depends=('sddm')
+makedepends=('git')
+provides=('sddm-sugar-candy')
+source=("git+https://framagit.org/MarianArlt/sddm-sugar-candy.git")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd sddm-sugar-candy
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+package() {
+    install -dm755 "${pkgdir}/usr/share/sddm/themes"
+    cp -r sddm-sugar-candy "${pkgdir}/usr/share/sddm/themes/sugar-candy"
+
+    # Golden Arch SDDM config
+    install -dm755 "${pkgdir}/etc/sddm.conf.d"
+    cat > "${pkgdir}/etc/sddm.conf.d/golden-arch.conf" << 'EOF'
+[Theme]
+Current=sugar-candy
+EOF
+}

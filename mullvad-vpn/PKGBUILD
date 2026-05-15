@@ -1,0 +1,15 @@
+pkgname=mullvad-vpn
+pkgver=2025.5
+pkgrel=1
+pkgdesc="The Mullvad VPN client app"
+arch=('x86_64')
+url="https://github.com/mullvad/mullvadvpn-app"
+license=('GPL-3.0-only')
+depends=('nss' 'libnotify' 'gtk3')
+source=("${pkgname}-${pkgver}.deb::https://github.com/mullvad/mullvadvpn-app/releases/download/${pkgver}/MullvadVPN-${pkgver}_amd64.deb")
+sha256sums=('SKIP')
+
+package() {
+    bsdtar xf data.tar.gz -C "${pkgdir}" 2>/dev/null || \
+    bsdtar xf data.tar.xz -C "${pkgdir}" 2>/dev/null || true
+}

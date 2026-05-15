@@ -1,0 +1,19 @@
+# Golden Arch — fish config
+set -gx EDITOR nano
+set -gx VISUAL nano
+
+# Modern CLI aliases
+alias ls 'eza --icons'
+alias ll 'eza -la --icons --git'
+alias lt 'eza --tree --icons'
+alias cat 'bat --style=auto'
+alias grep 'rg'
+alias find 'fd'
+alias top 'btop'
+alias ff 'fastfetch'
+
+# Starship prompt
+starship init fish | source
+
+# fzf key bindings
+fzf --fish 2>/dev/null | source

@@ -1,0 +1,29 @@
+pkgname=zapret-git
+pkgver=r720.abc1234
+pkgrel=1
+pkgdesc="DPI bypass tool for bypassing internet censorship"
+arch=('x86_64')
+url="https://github.com/bol-van/zapret"
+license=('MIT')
+depends=('nftables' 'curl')
+makedepends=('git')
+provides=('zapret')
+source=("git+https://github.com/bol-van/zapret.git")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd zapret
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    cd zapret
+    make
+}
+
+package() {
+    cd zapret
+    install -dm755 "${pkgdir}/opt/zapret"
+    cp -r . "${pkgdir}/opt/zapret/"
+    chmod -R 755 "${pkgdir}/opt/zapret"
+}

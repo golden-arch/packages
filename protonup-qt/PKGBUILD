@@ -1,0 +1,28 @@
+pkgname=protonup-qt
+pkgver=2.10.1
+pkgrel=1
+pkgdesc="Install and manage Proton-GE and Luxtorpeda for Steam and Wine-GE for Lutris"
+arch=('x86_64')
+url="https://github.com/DavidoTek/ProtonUp-Qt"
+license=('GPL-3.0-only')
+depends=('qt6-base' 'qt6-networkauth' 'python' 'python-requests')
+makedepends=('git' 'qt6-tools')
+source=("${pkgname}-${pkgver}.tar.gz::https://github.com/DavidoTek/ProtonUp-Qt/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+    cd "ProtonUp-Qt-${pkgver}"
+    python setup.py build 2>/dev/null || true
+}
+
+package() {
+    cd "ProtonUp-Qt-${pkgver}"
+    install -dm755 "${pkgdir}/usr/bin"
+    install -dm755 "${pkgdir}/usr/share/protonup-qt"
+    cp -r . "${pkgdir}/usr/share/protonup-qt/"
+    cat > "${pkgdir}/usr/bin/protonup-qt" << 'EOF'
+#!/bin/bash
+cd /usr/share/protonup-qt && python main.py "$@"
+EOF
+    chmod 755 "${pkgdir}/usr/bin/protonup-qt"
+}

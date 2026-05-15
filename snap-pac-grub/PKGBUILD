@@ -1,0 +1,31 @@
+pkgname=snap-pac-grub
+pkgver=1.0
+pkgrel=1
+pkgdesc="Pacman hook to regenerate GRUB config after snapper operations"
+arch=('any')
+url="https://github.com/golden-arch/packages"
+license=('GPL-3.0-only')
+depends=('snapper' 'snap-pac' 'grub')
+source=()
+sha256sums=()
+
+package() {
+    # Pre-install hook: regenerate GRUB before snapper snapshots
+    install -dm755 "${pkgdir}/usr/share/libalpm/hooks"
+    cat > "${pkgdir}/usr/share/libalpm/hooks/50-snap-pac-grub.hook" << 'EOF'
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = linux
+Target = linux-zen
+Target = linux-lts
+
+[Action]
+Description = Updating GRUB to include Snapper snapshots...
+When = PostTransaction
+Exec = /usr/bin/grub-mkconfig -o /boot/grub/grub.cfg
+Depends = grub
+EOF
+}
