@@ -1,4 +1,10 @@
 # Golden Arch — fish config
+
+# System info on terminal open
+if status is-interactive
+  bash /etc/profile.d/goldenarch-motd.sh 2>/dev/null
+end
+
 set -gx EDITOR nano
 set -gx VISUAL nano
 

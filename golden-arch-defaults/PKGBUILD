@@ -1,6 +1,6 @@
 pkgname=golden-arch-defaults
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Golden Arch Linux system defaults — sysctl hardening, skel, mirrorlist"
 arch=('any')
 url="https://github.com/golden-arch/packages"
@@ -23,8 +23,9 @@ source=(
     "skel-zshrc"
     "skel-fishconfig"
     "motd"
+    "goldenarch-motd.sh"
 )
-sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
+sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP')
 
 package() {
     # sysctl hardening
@@ -46,6 +47,9 @@ package() {
     install -Dm644 skel-fishconfig \
         "${pkgdir}/etc/skel/.config/fish/config.fish"
 
-    # MOTD
+    # Static MOTD (shown at TTY/SSH login by PAM)
     install -Dm644 motd "${pkgdir}/etc/motd"
+
+    # Dynamic terminal greeting (runs on every interactive shell open)
+    install -Dm755 goldenarch-motd.sh "${pkgdir}/etc/profile.d/goldenarch-motd.sh"
 }
