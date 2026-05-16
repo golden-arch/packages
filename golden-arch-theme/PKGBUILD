@@ -23,17 +23,17 @@ source=(
     "kdeglobals"
     "kwinrc"
     "gtk-settings.ini"
-    "wallpapers/goldenarch-centered-1080p.png"
-    "wallpapers/goldenarch-centered-1440p.png"
-    "wallpapers/goldenarch-offset-1080p.png"
-    "wallpapers/goldenarch-offset-1440p.png"
-    "icons/goldenarch-16.png"
-    "icons/goldenarch-32.png"
-    "icons/goldenarch-48.png"
-    "icons/goldenarch-64.png"
-    "icons/goldenarch-128.png"
-    "icons/goldenarch-256.png"
-    "icons/goldenarch-512.png"
+    "goldenarch-centered-1080p.png"
+    "goldenarch-centered-1440p.png"
+    "goldenarch-offset-1080p.png"
+    "goldenarch-offset-1440p.png"
+    "goldenarch-16.png"
+    "goldenarch-32.png"
+    "goldenarch-48.png"
+    "goldenarch-64.png"
+    "goldenarch-128.png"
+    "goldenarch-256.png"
+    "goldenarch-512.png"
 )
 sha256sums=('SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP' 'SKIP'
             'SKIP' 'SKIP' 'SKIP' 'SKIP'
@@ -73,18 +73,18 @@ package() {
 
     # Wallpapers
     install -dm755 "${pkgdir}/usr/share/backgrounds/golden-arch"
-    install -Dm644 wallpapers/goldenarch-centered-1080p.png \
+    install -Dm644 goldenarch-centered-1080p.png \
         "${pkgdir}/usr/share/backgrounds/golden-arch/goldenarch-centered-1080p.png"
-    install -Dm644 wallpapers/goldenarch-centered-1440p.png \
+    install -Dm644 goldenarch-centered-1440p.png \
         "${pkgdir}/usr/share/backgrounds/golden-arch/goldenarch-centered-1440p.png"
-    install -Dm644 wallpapers/goldenarch-offset-1080p.png \
+    install -Dm644 goldenarch-offset-1080p.png \
         "${pkgdir}/usr/share/backgrounds/golden-arch/goldenarch-offset-1080p.png"
-    install -Dm644 wallpapers/goldenarch-offset-1440p.png \
+    install -Dm644 goldenarch-offset-1440p.png \
         "${pkgdir}/usr/share/backgrounds/golden-arch/goldenarch-offset-1440p.png"
 
     # Hicolor app icons
     for s in 16 32 48 64 128 256 512; do
-        install -Dm644 "icons/goldenarch-${s}.png" \
+        install -Dm644 "goldenarch-${s}.png" \
             "${pkgdir}/usr/share/icons/hicolor/${s}x${s}/apps/golden-arch.png"
     done
 

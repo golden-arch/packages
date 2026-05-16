@@ -1,6 +1,6 @@
 # Maintainer: Golden Arch <releases@golden-arch.org>
 pkgname=zen-browser-bin
-pkgver=1.12b
+pkgver=1.19.13b
 pkgrel=1
 pkgdesc="Firefox-based browser with a beautiful UI and strong privacy defaults"
 arch=('x86_64')
@@ -10,7 +10,7 @@ depends=('gtk3' 'libxt' 'dbus-glib' 'alsa-lib' 'nss' 'ttf-font')
 provides=('zen-browser')
 conflicts=('zen-browser')
 options=('!strip')
-source=("zen-browser-${pkgver}.tar.bz2::https://github.com/zen-browser/desktop/releases/download/${pkgver}/zen.linux-x86_64.tar.bz2"
+source=("zen-browser-${pkgver}.tar.xz::https://github.com/zen-browser/desktop/releases/download/${pkgver}/zen.linux-x86_64.tar.xz"
         "zen-browser.desktop")
 sha256sums=('SKIP'
             'SKIP')
