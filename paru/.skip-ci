@@ -1,1 +1,0 @@
-paru 2.0.4 alpm crate does not support libalpm v16 (requires v15.x). Install via: yay -S paru

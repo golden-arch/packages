@@ -1,0 +1,65 @@
+# Maintainer: Maxim Balashov <me@rsg.su>
+# Co-Maintainer: Mehrab Mahmud Udoy <contact@rimehrab.is-a.dev>
+
+pkgname=ayugram-desktop-bin
+pkgver=6.7.8
+pkgrel=3
+pkgdesc="Desktop Telegram client with good customization and Ghost mode"
+arch=(x86_64)
+url="https://github.com/AyuGram/AyuGramDesktop"
+license=('GPL-3.0-or-later')
+depends=(
+    'abseil-cpp' 'ada' 'ffmpeg' 'glib2' 'glibc' 'hicolor-icon-theme'
+    'hunspell' 'kcoreaddons' 'libavif' 'libdispatch' 'libgcc' 'libheif'
+    'libjpeg-turbo' 'libjxl' 'libstdc++' 'libvpx' 'libx11' 'libxcb'
+    'libxcomposite' 'libxdamage' 'libxext' 'libxfixes' 'libxkbcommon'
+    'libxrandr' 'libxtst' 'lz4' 'minizip' 'openal' 'openh264' 'openssl'
+    'opus' 'libpipewire' 'protobuf' 'qt6-base' 'qt6-declarative'
+    'qt6-svg' 'qt6-wayland' 'rnnoise'
+    'xcb-util-keysyms' 'xxhash' 'zlib'
+)
+optdepends=(
+    'geoclue: geoinformation support'
+    'geocode-glib-2: geocoding support'
+    'webkit2gtk-4.1: embedded browser features provided by webkit2gtk-4.1'
+    'webkitgtk-6.0: embedded browser features provided by webkitgtk-6.0 (Wayland only)'
+    'xdg-desktop-portal: desktop integration'
+)
+provides=('ayugram-desktop')
+conflicts=('ayugram-desktop')
+options=('!debug')
+
+source=("https://cdn77.cachyos.org/repo/${CARCH}/cachyos/ayugram-desktop-${pkgver}-${pkgrel}-${CARCH}.pkg.tar.zst")
+sha256sums=('db82beb261d22d99ae20b67e7715178ef65c3c876c8f8e55ad74f7d217deb8f5')
+
+package() {
+    install -Dm755 "$srcdir/usr/bin/AyuGram" "$pkgdir/usr/bin/AyuGram"
+
+    install -Dm644 "$srcdir/usr/share/applications/com.ayugram.desktop.desktop" \
+        "$pkgdir/usr/share/applications/com.ayugram.desktop.desktop"
+
+    install -Dm644 "$srcdir/usr/share/dbus-1/services/com.ayugram.desktop.service" \
+        "$pkgdir/usr/share/dbus-1/services/com.ayugram.desktop.service"
+
+    install -Dm644 "$srcdir/usr/share/metainfo/com.ayugram.desktop.metainfo.xml" \
+        "$pkgdir/usr/share/metainfo/com.ayugram.desktop.metainfo.xml"
+
+    local icon_size
+    for icon_size in 16 32 48 64 128 256 512; do
+        install -Dm644 "$srcdir/usr/share/icons/hicolor/${icon_size}x${icon_size}/apps/com.ayugram.desktop.png" \
+            "$pkgdir/usr/share/icons/hicolor/${icon_size}x${icon_size}/apps/com.ayugram.desktop.png"
+    done
+
+    for icon_size in 16 32 48 64 128 256 512; do
+        install -Dm644 "$srcdir/usr/share/icons/hicolor/${icon_size}x${icon_size}@2/apps/com.ayugram.desktop.png" \
+            "$pkgdir/usr/share/icons/hicolor/${icon_size}x${icon_size}@2/apps/com.ayugram.desktop.png"
+    done
+
+    local sym_icon
+    for sym_icon in com.ayugram.desktop-attention-symbolic.svg \
+                    com.ayugram.desktop-mute-symbolic.svg \
+                    com.ayugram.desktop-symbolic.svg; do
+        install -Dm644 "$srcdir/usr/share/icons/hicolor/symbolic/apps/${sym_icon}" \
+            "$pkgdir/usr/share/icons/hicolor/symbolic/apps/${sym_icon}"
+    done
+}
