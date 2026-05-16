@@ -1,6 +1,6 @@
 pkgname=golden-arch-branding
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Golden Arch Linux branding — wallpapers, GRUB theme, Plymouth theme, SDDM theme"
 arch=('any')
 url="https://github.com/golden-arch/packages"
@@ -50,7 +50,12 @@ package() {
     install -dm755 "${pkgdir}/usr/share/plymouth/themes"
     tar -xzf plymouth-theme.tar.gz -C "${pkgdir}/usr/share/plymouth/themes/"
 
-    # SDDM Sugar Candy config
+    # SDDM: set Sugar Candy as the default theme via a conf drop-in
+    install -dm755 "${pkgdir}/etc/sddm.conf.d"
+    printf '[Theme]\nCurrent=sugar-candy\n' \
+        > "${pkgdir}/etc/sddm.conf.d/golden-arch-theme.conf"
+
+    # Sugar Candy theme customisation (applied by post_install hook)
     install -Dm644 sddm-theme.conf \
-        "${pkgdir}/usr/share/sddm/themes/sugar-candy/theme.conf"
+        "${pkgdir}/usr/share/golden-arch/sddm-theme.conf"
 }

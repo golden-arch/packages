@@ -1,6 +1,6 @@
 pkgname=yay
 pkgver=12.4.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Yet another yogurt - An AUR Helper written in Go"
 arch=('x86_64')
 url="https://github.com/Jguer/yay"
@@ -12,10 +12,14 @@ sha256sums=('SKIP')
 
 build() {
     cd "${pkgname}-${pkgver}"
-    make VERSION="${pkgver}" DESTDIR="${pkgdir}"
+    make VERSION="${pkgver}"
 }
 
 package() {
     cd "${pkgname}-${pkgver}"
-    make VERSION="${pkgver}" DESTDIR="${pkgdir}" install
+    install -Dm755 yay "${pkgdir}/usr/bin/yay"
+    install -Dm644 man/yay.8 "${pkgdir}/usr/share/man/man8/yay.8"
+    install -Dm644 completions/bash "${pkgdir}/usr/share/bash-completion/completions/yay"
+    install -Dm644 completions/zsh "${pkgdir}/usr/share/zsh/site-functions/_yay"
+    install -Dm644 completions/fish "${pkgdir}/usr/share/fish/vendor_completions.d/yay.fish"
 }

@@ -1,0 +1,19 @@
+post_install() {
+    _add_repo
+}
+
+post_upgrade() {
+    _add_repo
+}
+
+_add_repo() {
+    local conf=/etc/pacman.conf
+    if ! grep -q '\[golden-arch\]' "$conf" 2>/dev/null; then
+        cat >> "$conf" << 'EOF'
+
+[golden-arch]
+SigLevel = Required
+Server = https://github.com/golden-arch/repo/releases/download/packages
+EOF
+    fi
+}

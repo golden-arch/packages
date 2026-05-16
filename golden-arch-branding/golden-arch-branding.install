@@ -1,4 +1,9 @@
 post_install() {
+    # Apply Sugar Candy theme customisation
+    local src=/usr/share/golden-arch/sddm-theme.conf
+    local dst=/usr/share/sddm/themes/sugar-candy/theme.conf
+    [[ -f "$src" && -d "$(dirname "$dst")" ]] && cp "$src" "$dst"
+
     # Set default Plymouth theme
     plymouth-set-default-theme -R golden-arch 2>/dev/null || true
 
